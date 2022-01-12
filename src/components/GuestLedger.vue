@@ -11,30 +11,50 @@
     <div>
       <button id="button" @click="submitGuest">SAVE</button>
     </div>
+    <div id="guest" v-for="(guest,index) in guests" v-show="guests.length>0" :key="index">
+      <div>Email: {{guest.mail}}</div>
+      <div>Message: {{guest.message}}</div>
+    </div>
   </div>
 
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name:"GuestLedger",
   data() {
     return {
       guests:[],
       mail:'',
-      message:''
+      message:'',
     }
   },
   methods:{
     submitGuest(){
-      this.guests.push({
-        mail:this.mail,
-        message:this.message
+      axios.post('http://localhost:5000/guests',{
+        "mail":this.mail,
+        "message":this.message
+      }).then(res => {
+        console.log(res)
+        this.getAllGuests()
       })
       this.mail= ''
       this.message= ''
       console.log(this.guests)
+    },
+    getAllGuests() {
+      axios.get('http://localhost:5000/guests')
+          .then(res => {
+            this.guests=res.data
+          })
     }
+  },
+  mounted() {
+    axios.get('http://localhost:5000/guests')
+        .then(res => {
+          this.guests=res.data
+        })
   }
 }
 </script>
@@ -52,5 +72,8 @@ button {
 }
 textarea {
   width: 70%;
+}
+#guest {
+  margin-top: 15px;
 }
 </style>
