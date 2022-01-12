@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <guest-ledger></guest-ledger>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import GuestLedger from './components/GuestLedger.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    GuestLedger
   }
 }
 </script>
@@ -26,3 +25,4 @@ export default {
   margin-top: 60px;
 }
 </style>
+
